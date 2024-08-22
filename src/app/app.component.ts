@@ -44,6 +44,10 @@ export class AppComponent {
     
   }
 
+  /*
+  * In the debouncing technique, no matter how many times the user fires the event, 
+  * the attached function will be executed only after the specified time once the user stops firing the event.
+  */
   debounce = (func: any, timeout: any) =>{
     let timer: any;
     return (() => {
@@ -54,9 +58,25 @@ export class AppComponent {
     })();
   }
 
+  /*
+  * Throttling is a technique in which, no matter how many times the user fires the event, 
+  * the attached function will be executed only once in a given time interval.
+  */
+  throttle = (func: any, delay: any) => {
+    let prev = 0;
+    return () => {
+      let now = new Date().getTime();
+      console.log(prev,now,delay);
+      if((now - prev) > delay) {
+        prev = now;
+       func.apply();
+      }
+    }
+  }
+
   filter = () => {
 
-    this.debounce(
+    this.throttle(
       () => console.log(this.search),
       2000
     )
